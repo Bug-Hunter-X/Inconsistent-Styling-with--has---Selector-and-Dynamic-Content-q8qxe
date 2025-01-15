@@ -1,0 +1,20 @@
+The following CSS code snippet demonstrates an issue where the expected behavior of `:has()` selector doesn't work as intended in certain browsers or situations.  The goal is to style the parent element (.container) based on the presence of a child element (.child) with a specific class (.highlight). However, if the `.child` element with the class `.highlight` is dynamically added or removed, some browsers may not correctly update the styling of the parent element.  This might lead to inconsistent visual presentation, especially when working with JavaScript or user interactions.
+
+```css
+.container:has(.child.highlight) {
+  background-color: yellow;
+}
+
+.container {
+  padding: 20px;
+  border: 1px solid #ccc;
+}
+
+.child {
+  color: blue;
+}
+
+.highlight {
+  color: red;
+}
+```
