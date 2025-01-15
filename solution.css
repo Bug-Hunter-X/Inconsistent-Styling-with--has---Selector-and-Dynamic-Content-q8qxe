@@ -1,0 +1,41 @@
+The solution involves using JavaScript to force a reflow or repaint of the parent element when changes are made to the child element(s).  This is a workaround as the underlying browser rendering issue in handling `:has()` with dynamic content isn't fully resolved in the CSS specification itself.
+
+```javascript
+const container = document.querySelector('.container');
+const highlightButton = document.getElementById('highlightButton');
+const removeHighlightButton = document.getElementById('removeHighlightButton');
+const childElement = document.querySelector('.child');
+
+highlightButton.addEventListener('click', () => {
+  childElement.classList.add('highlight');
+  // Force reflow/repaint
+  container.offsetHeight; // Reading the offsetHeight forces a reflow
+});
+
+removeHighlightButton.addEventListener('click', () => {
+  childElement.classList.remove('highlight');
+  // Force reflow/repaint
+  container.offsetHeight; // Reading the offsetHeight forces a reflow
+});
+```
+
+The CSS file remains largely the same:
+```css
+.container:has(.child.highlight) {
+  background-color: yellow;
+}
+
+.container {
+  padding: 20px;
+  border: 1px solid #ccc;
+}
+
+.child {
+  color: blue;
+}
+
+.highlight {
+  color: red;
+}
+```
+This JavaScript code ensures that after adding or removing the `highlight` class, a reflow is triggered, forcing the browser to recalculate the styles and apply them correctly.
